@@ -29,6 +29,10 @@ provider "aws" {
   region = "eu-west-2"
 }
 
+provider "aws" {
+  region = "eu-west-2"
+}
+
 resource "aws_ecs_cluster" "foo" {
   name = "app-cluster"
 }
@@ -65,15 +69,18 @@ resource "aws_launch_template" "auto-scaling-group-app" {
   name          = "auto-scaling-group-web"
   image_id      = data.aws_ami.ecs-optimized.image_id
   instance_type = "t2.micro"
-  key_name      = "demo-key"
-  user_data     = file("userdata.sh")
+  key_name      = "Demo Key"
+
+  user_data     = base64encode(templatefile("userdata.sh.tpl", {
+    ECS_CLUSTER = aws_ecs_cluster.foo.name
+  }))
 
   iam_instance_profile {
     name = aws_iam_instance_profile.ecs_instance_profile.name
   }
 
   network_interfaces {
-    subnet_id       = "subnet-0a16a548dba4daf76"
+    subnet_id       = "subnet-0552c197da4a98bbe"
     security_groups = ["sg-090e639d13a884e4a"]
   }
 }
