@@ -1,54 +1,54 @@
 
 resource "aws_security_group" "app_sg" {
-  name        = "allow_tls"
-  description = "Allow TLS inbound traffic and all outbound traffic"
+  name        = var.allow_tls
+  description = var.allow_tls_description
   vpc_id      = aws_vpc.main.id
 
   tags = {
-    Name = "allow_tls"
+    Name = var.allow_tls
   }
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_http_ipv4" {
   security_group_id = aws_security_group.app_sg.id
-  cidr_ipv4         = "0.0.0.0/0"
-  from_port         = 80
-  ip_protocol       = "tcp"
-  to_port           = 80
+  cidr_ipv4         = var.cidr_ipv4
+  from_port         = var.http_port
+  ip_protocol       = var.ip_protocol
+  to_port           = var.http_port
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_http_ipv6" {
   security_group_id = aws_security_group.app_sg.id
-  cidr_ipv6         = "::/0"
-  from_port         = 80
-  ip_protocol       = "tcp"
-  to_port           = 80
+  cidr_ipv6         = var.cidr_ipv6
+  from_port         = var.http_port
+  ip_protocol       = var.ip_protocol
+  to_port           = var.http_port
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_ssh_ipv4" {
   security_group_id = aws_security_group.app_sg.id
-  cidr_ipv4         = "0.0.0.0/0"
-  from_port         = 22
-  ip_protocol       = "tcp"
-  to_port           = 22
+  cidr_ipv4         = var.cidr_ipv4
+  from_port         = var.ssh_port
+  ip_protocol       = var.ip_protocol
+  to_port           = var.ssh_port
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_ssh_ipv6" {
   security_group_id = aws_security_group.app_sg.id
-  cidr_ipv6         = "::/0"
-  from_port         = 22
-  ip_protocol       = "tcp"
-  to_port           = 22
+  cidr_ipv6         = var.cidr_ipv6
+  from_port         = var.ssh_port
+  ip_protocol       = var.ip_protocol_tcp
+  to_port           = var.ssh_port
 
 }
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
   security_group_id = aws_security_group.app_sg.id
-  cidr_ipv4         = "0.0.0.0/0"
-  ip_protocol       = "-1" # semantically equivalent to all ports
+  cidr_ipv4         = var.cidr_ipv4
+  ip_protocol       = var.ip_protocol # semantically equivalent to all ports
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv6" {
   security_group_id = aws_security_group.app_sg.id
-  cidr_ipv6         = "::/0"
-  ip_protocol       = "-1" # semantically equivalent to all ports
+  cidr_ipv6         = var.cidr_ipv6
+  ip_protocol       = var.ip_protocol  # semantically equivalent to all ports
 }

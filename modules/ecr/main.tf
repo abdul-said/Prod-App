@@ -1,3 +1,3 @@
 resource "aws_ecr_repository" "production" {
-  name                 = "production-registry"
+  name = var.ecr_repo_name
 }
