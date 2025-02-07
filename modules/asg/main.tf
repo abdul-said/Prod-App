@@ -1,12 +1,10 @@
 resource "aws_launch_template" "auto-scaling-group-app" {
-  name = "auto-scaling-group-web"
+  name = var.launch_template_name
   image_id = data.aws_ami.ecs-optimized.image_id
-  instance_type = "t2.micro"
-  key_name = "demo-key"
+  instance_type = var.instance_type
+  key_name = var.key_name 
 
-  user_data = base64encode(templatefile("userdata.sh.tpl", {
-    ECS_CLUSTER = aws_ecs_cluster.prod_cluster.name
-  }))
+  user_data = var.user_data
 
   iam_instance_profile {
     name = aws_iam_instance_profile.ecs_instance_profile
@@ -19,29 +17,29 @@ resource "aws_launch_template" "auto-scaling-group-app" {
 }
 
 resource "aws_autoscaling_group" "asg-1" {
-  desired_capacity = 1
-  max_size = 2
-  min_size = 1
+  desired_capacity = var.asg_desired_capacity
+  max_size = var.asg_max_size
+  min_size = var.asg_min_size
 
   launch_template {
     id = aws_launch_template.auto-scaling-group-app.id
-    version = "$Latest"
+    version = var.launch_template_version
   }
 }
 
 data "aws_ami" "ecs-optimized" {
-  most_recent      = true
-  owners           = ["amazon"]
+  most_recent      = var.data_ami_most_recent
+  owners           = var.data_ami_owners
 
   filter {
-    name   = "name"
-    values = ["amzn2-ami-ecs-hvm-*"]
+    name   = var.data_ami_filter_name
+    values = var.data_ami_filter_value
   }
 
 }
 
 resource "aws_iam_instance_profile" "ecs_instance_profile" {
-  name = "ecs_instance_profile"
+  name = var.instance_profile_name
   role = aws_iam_role.ecs_instance_role.name
 
   # this is required to link so the ECS agent running on your EC2 Instance
@@ -49,30 +47,11 @@ resource "aws_iam_instance_profile" "ecs_instance_profile" {
 }
 
 resource "aws_iam_role" "ecs_instance_role" {
-  name = "test_instance_role"
-
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Sid    = ""
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        }
-      },
-    ]
-  })
-
-  tags = {
-    tag-key = "tag-value"
-  }
+  name = var.iam_role_name
+  assume_role_policy = var.assume_role_policy
 }
 
 resource "aws_iam_role_policy_attachment" "test-attach" {
   role       = aws_iam_role.ecs_instance_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+  policy_arn = var.iam_role_policy_arn
 }

@@ -1,10 +1,10 @@
 resource "aws_vpc" "main" {
-  cidr_block           = "10.0.0.0/16"
-  enable_dns_hostnames = true
-  enable_dns_support   = true
+  cidr_block           = var.vpc_CIDR
+  enable_dns_hostnames = var.enable_dns_hostnames_true
+  enable_dns_support   = var.enable_dns_support_true
 
   tags = {
-    Name = "prod-vpc"
+    Name = var.vpc_name
   }
 }
 
@@ -12,41 +12,41 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "prod-gw"
+    Name = var.IG_name
   }
 }
 
 resource "aws_subnet" "public_subnet_1" {
   vpc_id            = aws_vpc.main.id
   availability_zone = data.aws_availability_zones.available.names[0]
-  cidr_block        = "10.0.1.0/24"
-  map_public_ip_on_launch = true
+  cidr_block        = var.public_subnet_1_CIDR
+  map_public_ip_on_launch = var.map_public_ip_on_launch
 
   tags = {
-    Name = "public_subnet_1"
+    Name = var.public_subnet_1_name
   }
 }
 
 resource "aws_subnet" "public_subnet_2" {
   vpc_id            = aws_vpc.main.id
   availability_zone = data.aws_availability_zones.available.names[1]
-  cidr_block        = "10.0.2.0/24"
-  map_public_ip_on_launch = true
+  cidr_block        = var.public_subnet_2_CIDR
+  map_public_ip_on_launch = var.map_public_ip_on_launch
 
   tags = {
-    Name = "public_subnet_2"
+    Name = var.public_subnet_2_name
   }
 
 }
 
 resource "aws_subnet" "public_subnet_3" {
   vpc_id            = aws_vpc.main.id
-  availability_zone = data.aws_availability_zones.available.names[1]
-  cidr_block        = "10.0.3.0/24"
-  map_public_ip_on_launch = true
+  availability_zone = data.aws_availability_zones.available.names[2]
+  cidr_block        = var.public_subnet_3_CIDR
+  map_public_ip_on_launch = var.map_public_ip_on_launch
 
   tags = {
-    Name = "public_subnet_2"
+    Name = var.public_subnet_3_name
   }
 }
 
@@ -54,12 +54,12 @@ resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block = var.route_table_CIDR
     gateway_id = aws_internet_gateway.gw.id
   }
 
   tags = {
-    Name = "public-route-table"
+    Name = var.route_table_name
   }
 }
 
