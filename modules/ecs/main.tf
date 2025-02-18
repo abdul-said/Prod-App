@@ -4,7 +4,7 @@ resource "aws_ecs_cluster" "prod_cluster" {
 
 resource "aws_ecs_task_definition" "prod_task" {
   family = var.task_definition_family
-  container_definitions = var.container_definitions
+  container_definitions = jsonencode(var.container_definitions)
   execution_role_arn = aws_iam_role.task_execution_role.arn
 }
 
@@ -18,7 +18,7 @@ resource "aws_ecs_service" "app" {
 
 resource "aws_iam_role" "task_execution_role" {
   name = var.iam_role_name
-  assume_role_policy = var.assume_role_policy
+  assume_role_policy = jsonencode(var.assume_role_policy)
 }
 
 resource "aws_iam_role_policy_attachment" "test-attach2" {

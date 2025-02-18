@@ -35,13 +35,15 @@ module "asg" {
   asg_desired_capacity = var.asg_desired_capacity
   asg_max_size = var.asg_max_size
   asg_min_size = var.asg_min_size
-  assume_role_policy = var.assume_role_policy
-  iam_role_name = var.iam_role_name
-  iam_role_policy_arn = var.iam_role_policy_arn
+  assume_role_policy = var.assume_role_policy_instance_role
+  iam_role_name = var.iam_role_instance_role_name
+  iam_role_policy_arn = var.iam_role_instance_policy_arn
   data_ami_most_recent = var.data_ami_most_recent
   data_ami_owners = var.data_ami_owners
   data_ami_filter_name = var.data_ami_filter_name
   data_ami_filter_value = var.data_ami_filter_value
+  security_groups = module.sg.security_group_id
+  subnet_id = module.vpc.public_subnet_1_id
 }
 
 module "ecs" {
@@ -51,14 +53,15 @@ module "ecs" {
   ecs_service_launch_type = var.ecs_service_launch_type
   ecs_service_name = var.ecs_service_name
   container_definitions = var.container_definitions
-  iam_role_name = var.iam_role_name
-  iam_role_policy_arn = var.iam_role_policy_arn
+  iam_role_name = var.iam_role_execution_role_name
+  iam_role_policy_arn = var.iam_role_execution_policy_arn
   task_definition_family = var.task_definition_family
-  assume_role_policy = var.assume_role_policy
+  assume_role_policy = var.assume_role_policy_execution_role
 }
 
 module "sg" {
   source = "./modules/sg"
+  vpc_id = module.vpc.vpc_id
   cidr_ipv4 = var.cidr_ipv4
   cidr_ipv6 = var.cidr_ipv6
   ip_protocol = var.ip_protocol

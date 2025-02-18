@@ -4,15 +4,15 @@ resource "aws_launch_template" "auto-scaling-group-app" {
   instance_type = var.instance_type
   key_name = var.key_name 
 
-  user_data = var.user_data
+  user_data = base64encode(var.user_data)
 
   iam_instance_profile {
-    name = aws_iam_instance_profile.ecs_instance_profile
-  }
+    name = aws_iam_instance_profile.ecs_instance_profile.name
+  } 
 
   network_interfaces {
-    subnet_id = module.vpc.public_subnet_1_id
-    security_groups = [ aws_security_group.app_sg.id]
+    subnet_id = var.subnet_id
+    security_groups = [var.security_groups]
   }
 }
 
@@ -48,7 +48,7 @@ resource "aws_iam_instance_profile" "ecs_instance_profile" {
 
 resource "aws_iam_role" "ecs_instance_role" {
   name = var.iam_role_name
-  assume_role_policy = var.assume_role_policy
+  assume_role_policy = jsonencode(var.assume_role_policy)
 }
 
 resource "aws_iam_role_policy_attachment" "test-attach" {

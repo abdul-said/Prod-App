@@ -29,3 +29,7 @@ variable "allow_tls" {
 variable "allow_tls_description" {
   description = "Allow TLS inbound traffic and all outbound traffic"
 }
+
+variable "vpc_id" {
+  
+}

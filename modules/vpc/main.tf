@@ -18,7 +18,7 @@ resource "aws_internet_gateway" "gw" {
 
 resource "aws_subnet" "public_subnet_1" {
   vpc_id            = aws_vpc.main.id
-  availability_zone = data.aws_availability_zones.available.names[0]
+  availability_zone = data.aws_availability_zones.az.names[0]
   cidr_block        = var.public_subnet_1_CIDR
   map_public_ip_on_launch = var.map_public_ip_on_launch
 
@@ -29,7 +29,7 @@ resource "aws_subnet" "public_subnet_1" {
 
 resource "aws_subnet" "public_subnet_2" {
   vpc_id            = aws_vpc.main.id
-  availability_zone = data.aws_availability_zones.available.names[1]
+  availability_zone = data.aws_availability_zones.az.names[1]
   cidr_block        = var.public_subnet_2_CIDR
   map_public_ip_on_launch = var.map_public_ip_on_launch
 
@@ -41,7 +41,7 @@ resource "aws_subnet" "public_subnet_2" {
 
 resource "aws_subnet" "public_subnet_3" {
   vpc_id            = aws_vpc.main.id
-  availability_zone = data.aws_availability_zones.available.names[2]
+  availability_zone = data.aws_availability_zones.az.names[2]
   cidr_block        = var.public_subnet_3_CIDR
   map_public_ip_on_launch = var.map_public_ip_on_launch
 
@@ -76,4 +76,8 @@ resource "aws_route_table_association" "public_rt_2" {
 resource "aws_route_table_association" "public_rt_3" {
   subnet_id      = aws_subnet.public_subnet_3.id
   route_table_id = aws_route_table.public.id
+}
+
+data "aws_availability_zones" "az" {
+  state = "available"
 }
