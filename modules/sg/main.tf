@@ -2,7 +2,7 @@
 resource "aws_security_group" "app_sg" {
   name        = var.allow_tls
   description = var.allow_tls_description
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = var.vpc_id
 
   tags = {
     Name = var.allow_tls
@@ -29,7 +29,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_ssh_ipv4" {
   security_group_id = aws_security_group.app_sg.id
   cidr_ipv4         = var.cidr_ipv4
   from_port         = var.ssh_port
-  ip_protocol       = var.ip_protocol
+  ip_protocol       = var.ip_protocol_tcp
   to_port           = var.ssh_port
 }
 

@@ -35,3 +35,7 @@ variable "iam_role_name" {}
 variable "iam_role_policy_arn" {}
 
 variable "assume_role_policy" {}
+
+variable "subnet_id" {}
+
+variable "security_groups" {}
