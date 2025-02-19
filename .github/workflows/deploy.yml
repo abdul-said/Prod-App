@@ -12,6 +12,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      
+      - name: Clear Terraform cache
+        run : |
+          rm -rf .terraform
+          rm -f .terraform.lock.hcl
+
+      - name: Devud Terraform Providers
+        run : |
+          terraform version
+          terraform providers    
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
@@ -19,7 +29,7 @@ jobs:
           terraform_version: 1.5.0  # Use the latest stable version
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -upgrade
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
