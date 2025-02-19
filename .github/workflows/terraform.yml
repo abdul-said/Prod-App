@@ -24,6 +24,7 @@ jobs:
 
       - name: Initialize Terraform
         run: terraform init -upgrade
+        working-directory: ./terraform
 
       - name: Destroy Infrastructure
         run: |
