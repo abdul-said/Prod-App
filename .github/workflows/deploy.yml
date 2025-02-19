@@ -18,11 +18,6 @@ jobs:
           rm -rf .terraform
           rm -f .terraform.lock.hcl
 
-      - name: Debug Terraform Providers
-        run : |
-          terraform version
-          terraform providers    
-
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -60,7 +55,7 @@ jobs:
       - name: Build, tag, and push Docker image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: my-ecr-repo  # Replace with your ECR repository name
+          ECR_REPOSITORY: production_repository  # Replace with your ECR repository name
           IMAGE_TAG: ${{ github.sha }}  # Use the Git commit SHA as the image tag
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
@@ -84,11 +79,11 @@ jobs:
       - name: Update ECS Task Definition
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: my-ecr-repo
+          ECR_REPOSITORY: production_repository
           IMAGE_TAG: ${{ github.sha }}
         run: |
           aws ecs register-task-definition \
-            --family my-task-family \
+            --family service \
             --container-definitions '[
               {
                 "name": "my-app",
@@ -108,7 +103,7 @@ jobs:
       - name: Deploy to ECS
         run: |
           aws ecs update-service \
-            --cluster my-cluster \
-            --service my-service \
-            --task-definition my-task-family \
+            --cluster production_ecs_cluster \
+            --service production_ecs_service \
+            --task-definition service \
             --force-new-deployment
