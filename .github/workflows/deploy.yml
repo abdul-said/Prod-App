@@ -79,18 +79,25 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-2
 
+      - name: Debug ECR Image URI
+        run: |
+          echo "ECR_REGISTRY: $ECR_REGISTRY"
+          echo "ECR_REPOSITORY: $ECR_REPOSITORY"
+          echo "IMAGE_TAG: $IMAGE_TAG"
+          echo "Image URI: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
       - name: Update ECS Task Definition
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: production_repository
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          aws ecs register-task-definition \
-            --family service \
-            --container-definitions '[
+          CONTAINER_DEFINITIONS=$(jq -n \
+            --arg image "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" \
+            '[
               {
                 "name": "my-app",
-                "image": "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG",
+                "image": $image,
                 "cpu": 256,
                 "memory": 512,
                 "essential": true,
@@ -101,7 +108,11 @@ jobs:
                   }
                 ]
               }
-            ]'
+            ]')
+          echo "Container Definitions: $CONTAINER_DEFINITIONS"
+          aws ecs register-task-definition \
+            --family service \
+            --container-definitions "$CONTAINER_DEFINITIONS"
 
       - name: Deploy to ECS
         run: |
