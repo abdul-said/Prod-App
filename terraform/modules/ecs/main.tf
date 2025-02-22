@@ -25,3 +25,20 @@ resource "aws_iam_role_policy_attachment" "test-attach2" {
   role       = aws_iam_role.task_execution_role.name
   policy_arn = var.iam_role_policy_arn
 }
+
+resource "aws_iam_role_policy" "ecr_access" {
+  name = "ecr_access"
+  role = aws_iam_role.task_execution_role.name
+
+  policy = jsondecode({
+    version = "2012-10-17"
+    statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "ecr"
+        ]
+      }
+    ]
+  })
+}
