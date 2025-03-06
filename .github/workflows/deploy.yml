@@ -64,6 +64,13 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
+      - name: Set ECR Registry as Job Output
+        id: set-output
+        run: |
+          echo "ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}" >> $GITHUB_OUTPUT
+    outputs:
+      ecr_registry: ${{ steps.set-output.outputs.ECR_REGISTRY }}
+
   update-ecs:
     name: Update ECS Task Definition
     runs-on: ubuntu-latest
@@ -85,10 +92,10 @@ jobs:
 
       - name: Set Image URI Variable
         run: |
-          echo "ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}" >> $GITHUB_ENV
+          echo "ECR_REGISTRY=${{ needs.build-and-push.outputs.ecr_registry }}" >> $GITHUB_ENV
           echo "ECR_REPOSITORY=production_repository" >> $GITHUB_ENV
           echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
-          echo "IMAGE_URI=${{ steps.login-ecr.outputs.registry }}/production_repository:${{ github.sha }}" >> $GITHUB_ENV
+          echo "IMAGE_URI=${{ needs.build-and-push.outputs.ecr_registry }}/production_repository:${{ github.sha }}" >> $GITHUB_ENV
 
       - name: Debug Image URI
         run: |
