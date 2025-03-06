@@ -99,15 +99,15 @@ jobs:
 
       - name: Debug Image URI
         run: |
-          echo "ECR_REGISTRY: $ECR_REGISTRY"
-          echo "ECR_REPOSITORY: $ECR_REPOSITORY"
-          echo "IMAGE_TAG: $IMAGE_TAG"
-          echo "Final Image URI: $IMAGE_URI"
+          echo "ECR_REGISTRY: ${{ env.ECR_REGISTRY }}"
+          echo "ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}"
+          echo "IMAGE_TAG: ${{ env.IMAGE_TAG }}"
+          echo "Final Image URI: ${{ env.IMAGE_URI }}"
 
       - name: Update ECS Task Definition
         run: |
           CONTAINER_DEFINITIONS=$(jq -n \
-            --arg image "$IMAGE_URI" \
+            --arg image "${{ env.IMAGE_URI }}" \
             '[
               {
                 "name": "my-app",
