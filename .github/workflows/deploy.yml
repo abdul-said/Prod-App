@@ -1,7 +1,9 @@
 name: Deploy to ECS
 
 on:
-  workflow_dispatch:  # Allows manual trigger
+   push:
+     branches:
+       - main  # Trigger on pushes to the main branch
 
 jobs:
   terraform-apply:
