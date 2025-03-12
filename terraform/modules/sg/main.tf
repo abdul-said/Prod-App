@@ -5,7 +5,7 @@ resource "aws_security_group" "app_sg" {
   vpc_id      = var.vpc_id
 
   tags = {
-    Name = var.allow_tls
+    Name = var.allow_tls 
   }
 }
 
@@ -13,7 +13,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_http_ipv4" {
   security_group_id = aws_security_group.app_sg.id
   cidr_ipv4         = var.cidr_ipv4
   from_port         = var.http_port
-  ip_protocol       = var.ip_protocol
+  ip_protocol       = var.ip_protocol_tcp
   to_port           = var.http_port
 }
 
@@ -21,7 +21,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_http_ipv6" {
   security_group_id = aws_security_group.app_sg.id
   cidr_ipv6         = var.cidr_ipv6
   from_port         = var.http_port
-  ip_protocol       = var.ip_protocol
+  ip_protocol       = var.ip_protocol_tcp
   to_port           = var.http_port
 }
 
