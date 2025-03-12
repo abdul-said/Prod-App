@@ -136,7 +136,7 @@ variable "ecs_cluster_name" {
 }
 
 variable "task_definition_family" {
-    default = "service"
+    default = "production_ecs_task_definition"
 }
 
 variable "container_definitions" {
@@ -227,4 +227,17 @@ variable "allow_tls_description" {
 
 variable "ecr_repo_name" {
     default = "production_repository"
+}
+
+variable "backend_bucket" {
+  default = "terraform-backend-abdul"
+}
+
+variable "backend_key" {
+  default = "production/terraform.tfstate"
+  description = "the path to the s3 bucket which you store the state file"
+}
+
+variable "backend_region" {
+  default = "eu-west-2"
 }
