@@ -155,7 +155,7 @@ variable "container_definitions" {
       ]
     }
   ])
-}
+} 
 
 variable "ecs_service_name" {
     default = "production_ecs_service"
