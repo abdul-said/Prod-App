@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket = "terraform-backend-abdul"
-    key    = "production/terraform.tfstate"
-    region = "eu-west-2"
+    bucket = var.backend_bucket
+    key    = var.backend_key
+    region = var.backend_region
   }
 }
