@@ -229,15 +229,3 @@ variable "ecr_repo_name" {
     default = "production_repository"
 }
 
-variable "backend_bucket" {
-  default = "terraform-backend-abdul"
-}
-
-variable "backend_key" {
-  default = "production/terraform.tfstate"
-  description = "the path to the s3 bucket which you store the state file"
-}
-
-variable "backend_region" {
-  default = "eu-west-2"
-}
