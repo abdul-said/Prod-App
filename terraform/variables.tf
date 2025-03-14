@@ -29,7 +29,7 @@ variable "enable_dns_support_true" {}
 variable "user_data" {}
 
 variable "key_name" {
-    description = aws access key name
+    description = "aws access key name"
 }
 
 variable "instance_type" {}
