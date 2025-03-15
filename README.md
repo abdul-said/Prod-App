@@ -1,6 +1,9 @@
 AWS ECS Terraform CI/CD Project
 
 
+![Smart Flowchart](images/flowchart.jpeg) 
+
+
 🚀 Project Overview
 This project provisions an AWS ECS cluster using Terraform and sets up a CI/CD pipeline to automate infrastructure and container deployment. The goal is to create a scalable containerized application environment using ECS without Fargate, ECR, ASG, VPC, and security groups.
 
@@ -15,14 +18,12 @@ This project provisions an AWS ECS cluster using Terraform and sets up a CI/CD p
 
 
 
-
 🏗️ Built With
   Terraform – Infrastructure as Code
   AWS ECS – Elastic Container Service
   AWS ECR – Elastic Container Registry
   GitHub Actions – CI/CD
   Docker – Containerization
-
 
 
 
@@ -41,13 +42,11 @@ This project provisions an AWS ECS cluster using Terraform and sets up a CI/CD p
 
 
 
-
 📦 Deployment Process
   CI/CD pipeline triggers terraform init and terraform apply to provision ECS, ECR, and other resources
   Docker container is built, tagged, and pushed to ECR
   Task definition is updated automatically
   Application becomes accessible via AWS-provided domain
-
 
 
 
@@ -60,11 +59,9 @@ This project provisions an AWS ECS cluster using Terraform and sets up a CI/CD p
 
 
 
-
 🛡️ Security
   AWS credentials are stored securely using GitHub secrets
   Security groups configured to restrict access
-
 
 
 
@@ -75,7 +72,6 @@ This project provisions an AWS ECS cluster using Terraform and sets up a CI/CD p
 
 
 
-
 🗺️ Roadmap
   Add support for multi-region deployment
   Automate secret rotation
@@ -83,14 +79,12 @@ This project provisions an AWS ECS cluster using Terraform and sets up a CI/CD p
 
 
  
- 
 🙌 Contributing
   Fork the repo
   Create a feature branch (git checkout -b feature/your-feature)
   Commit changes (git commit -m 'Add feature')
   Push to branch (git push origin feature/your-feature)
   Open a pull request
-
 
 
 
