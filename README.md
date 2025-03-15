@@ -1,7 +1,10 @@
 AWS ECS Terraform CI/CD Project
 
+
 🚀 Project Overview
 This project provisions an AWS ECS cluster using Terraform and sets up a CI/CD pipeline to automate infrastructure and container deployment. The goal is to create a scalable containerized application environment using ECS without Fargate, ECR, ASG, VPC, and security groups.
+
+
 
   Key Features:
     ✅ ECS Cluster with EC2 instances (no Fargate)
@@ -11,12 +14,16 @@ This project provisions an AWS ECS cluster using Terraform and sets up a CI/CD p
     ✅ Accessible via AWS-provided domain
 
 
+
+
 🏗️ Built With
   Terraform – Infrastructure as Code
   AWS ECS – Elastic Container Service
   AWS ECR – Elastic Container Registry
   GitHub Actions – CI/CD
   Docker – Containerization
+
+
 
 
 🚦 Getting Started
@@ -33,11 +40,15 @@ This project provisions an AWS ECS cluster using Terraform and sets up a CI/CD p
   Run CI/CD pipeline to provision infrastructure and deploy the container
 
 
+
+
 📦 Deployment Process
   CI/CD pipeline triggers terraform init and terraform apply to provision ECS, ECR, and other resources
   Docker container is built, tagged, and pushed to ECR
   Task definition is updated automatically
   Application becomes accessible via AWS-provided domain
+
+
 
 
 ⚙️ Configuration
@@ -48,9 +59,13 @@ This project provisions an AWS ECS cluster using Terraform and sets up a CI/CD p
   .app/	Directory for application code
 
 
+
+
 🛡️ Security
   AWS credentials are stored securely using GitHub secrets
   Security groups configured to restrict access
+
+
 
 
 💡 Troubleshooting
@@ -59,10 +74,14 @@ This project provisions an AWS ECS cluster using Terraform and sets up a CI/CD p
   Confirm AWS credentials are correctly configured
 
 
+
+
 🗺️ Roadmap
   Add support for multi-region deployment
   Automate secret rotation
   Add monitoring and logging
+
+
  
  
 🙌 Contributing
@@ -71,6 +90,8 @@ This project provisions an AWS ECS cluster using Terraform and sets up a CI/CD p
   Commit changes (git commit -m 'Add feature')
   Push to branch (git push origin feature/your-feature)
   Open a pull request
+
+
 
 
 📝 License
