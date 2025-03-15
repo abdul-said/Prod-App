@@ -1,7 +1,7 @@
 AWS ECS Terraform CI/CD Project
 
 
-![Smart Flowchart](images/flowchart.jpeg) 
+![Smart Flowchart](app/images/flowchart.jpeg) 
 
 
 🚀 Project Overview
