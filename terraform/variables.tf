@@ -1,98 +1,230 @@
-variable "vpc_cidr" {}
-
-variable "vpc_name" {}
-
-variable "internet_gateway_name" {}
-
-variable "route_table_cidr" {}
-
-variable "route_table_name" {}
-
-variable "public_subnet_1_cidr" {}
-
-variable "public_subnet_2_cidr" {}
-
-variable "public_subnet_3_cidr" {}
-
-variable "public_subnet_1_name" {}
-
-variable "public_subnet_2_name" {}
-
-variable "public_subnet_3_name" {}
-
-variable "map_public_ip_on_launch" {}
-
-variable "enable_dns_hostnames_true" {}
-
-variable "enable_dns_support_true" {}
-
-variable "user_data" {}
-
-variable "key_name" {
-    description = "aws access key name"
+variable "vpc_cidr" {
+  default = "10.0.0.0/16"
 }
 
-variable "instance_type" {}
+variable "vpc_name" {
+    default = "production_vpc"
+}
 
-variable "launch_template_name" {}
+variable "internet_gateway_name" {
+    default = "production_internet_gateway"
+}
 
-variable "launch_template_version" {}
+variable "route_table_cidr" {
+    default = "0.0.0.0/0"
+}
 
-variable "asg_desired_capacity" {}
+variable "route_table_name" {
+    default = "production_route_table"
+}
 
-variable "asg_max_size" {}
+variable "public_subnet_1_cidr" {
+    default = "10.0.1.0/24"
+}
 
-variable "asg_min_size" {}
+variable "public_subnet_2_cidr" {
+    default = "10.0.2.0/24"
+}
 
-variable "data_ami_most_recent" {}
+variable "public_subnet_3_cidr" {
+    default = "10.0.3.0/24"
+}
 
-variable "data_ami_owners" {}
+variable "public_subnet_1_name" {
+    default = "public_subnet_1"
+}
 
-variable "data_ami_filter_name" {}
+variable "public_subnet_2_name" {
+    default = "public_subnet_2"
+}
 
-variable "data_ami_filter_value" {}
+variable "public_subnet_3_name" {
+    default = "public_subnet_3"
+}
 
-variable "instance_profile_name" {}
+variable "map_public_ip_on_launch" {
+    default = true
+}
 
-variable "iam_role_instance_role_name" {}
+variable "enable_dns_hostnames_true" {
+    default = true
+}
 
-variable "iam_role_instance_policy_arn" {}
+variable "enable_dns_support_true" {
+    default = true
+}
 
-variable "assume_role_policy_instance_role" {}
+variable "user_data" {
+    type = string
+    default = "#!/bin/bash\necho ECS_CLUSTER=production_ecs_cluster >> /etc/ecs/ecs.config"
+}
 
-variable "ecs_cluster_name" {}
+variable "key_name" {
+    default = "VBox-2"
+}
 
-variable "task_definition_family" {}
+variable "instance_type" {
+    default = "t2.micro"
+}
 
-variable "container_definitions" {} 
+variable "launch_template_name" {
+    default = "production_auto_scaling_group"
+}
 
-variable "ecs_service_name" {}
+variable "launch_template_version" {
+    default = "$Latest"
+}
 
-variable "ecs_service_desired_count" {}
+variable "asg_desired_capacity" {
+    default = 1
+}
 
-variable "ecs_service_launch_type" {}
+variable "asg_max_size" {
+    default = 2
+}
 
-variable "iam_role_execution_role_name" {}
+variable "asg_min_size" {
+    default = 1
+}
 
-variable "assume_role_policy_execution_role" {}
+variable "data_ami_most_recent" {
+    default = true
+}
 
-variable "iam_role_execution_policy_arn" {}
+variable "data_ami_owners" {
+    default = ["amazon"]
+}
 
-variable "cidr_ipv4" {}
+variable "data_ami_filter_name" {
+    default = "name"
+}
 
-variable "http_port" {}
+variable "data_ami_filter_value" {
+    default = ["amzn2-ami-ecs-hvm-*"]
+}
 
-variable "ssh_port" {}
+variable "instance_profile_name" {
+    default = "ecs_instance_profile"
+}
 
-variable "ip_protocol_tcp" {}
+variable "iam_role_instance_role_name" {
+    default = "ecs_instance_role"
+}
 
-variable "cidr_ipv6" {}
+variable "iam_role_instance_policy_arn" {
+    default = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+}
 
-variable "ip_protocol" {}
+variable "assume_role_policy_instance_role" {
+    default = ({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = ""
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      },
+    ]
+  })
+}
 
-variable "allow_tls" {}
+variable "ecs_cluster_name" {
+    default = "production_ecs_cluster"
+}
 
-variable "allow_tls_description" {}
+variable "task_definition_family" {
+    default = "production_ecs_task_definition"
+}
 
-variable "ecr_repo_name" {}
+variable "container_definitions" {
+    default = ([
+    {
+      name      = "my-app"
+      image     = "058264103887.dkr.ecr.eu-west-2.amazonaws.com/production_repository"
+      cpu       = 256
+      memory    = 512
+      essential = true
+      portMappings = [
+        {
+          containerPort = 80
+          hostPort      = 80
+        }
+      ]
+    }
+  ])
+} 
 
+variable "ecs_service_name" {
+    default = "production_ecs_service"
+}
+
+variable "ecs_service_desired_count" {
+    default = 1
+}
+
+variable "ecs_service_launch_type" {
+    default = "EC2"
+}
+
+variable "iam_role_execution_role_name" {
+    default = "task_execution_role"
+}
+
+variable "assume_role_policy_execution_role" {
+    default = ({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = ""
+        Principal = {
+          Service = "ecs-tasks.amazonaws.com"
+        }
+      },
+    ]
+  })
+}
+
+variable "iam_role_execution_policy_arn" {
+    default = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
+variable "cidr_ipv4" {
+    default = "0.0.0.0/0"
+}
+
+variable "http_port" {
+    default = 80
+}
+
+variable "ssh_port" {
+    default = 22
+}
+
+variable "ip_protocol_tcp" {
+    default = "tcp"
+}
+
+variable "cidr_ipv6" {
+    default = "::/0"
+}
+
+variable "ip_protocol" {
+    default = "-1"
+}
+
+variable "allow_tls" {
+    default = "allow_tls"
+}
+
+variable "allow_tls_description" {
+    default = "Allow TLS inbound traffic and all outbound traffic"
+}
+
+variable "ecr_repo_name" {
+    default = "production_repository"
+}
