@@ -12,24 +12,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
-      - name: Clear Terraform cache
-        run: |
-          rm -rf .terraform
-          rm -f .terraform.lock.hcl
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.5.0  # Use the latest stable version
 
       - name: Terraform Init
-        run: terraform init -upgrade
+        run: terraform init
 
       - name: Terraform Apply
-        run: |
-          terraform init
-          terraform apply -auto-approve
+        run:  terraform apply -auto-approve
         
         working-directory: ./terraform
         env:
