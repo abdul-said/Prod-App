@@ -1,15 +1,15 @@
-AWS ECS Terraform CI/CD Project
+# AWS ECS Terraform CI/CD Project
 
 
-![Smart Flowchart](app/images/flowchart.jpeg) 
+![Smart Flowchart](app/images/1758050088039.jpg) 
 
 
-🚀 Project Overview
+## 🚀 Project Overview
 This project provisions an AWS ECS cluster using Terraform and sets up a CI/CD pipeline to automate infrastructure and container deployment. The goal is to create a scalable containerized application environment using ECS without Fargate, ECR, ASG, VPC, and security groups.
 
 
 
-  Key Features:
+  ### Key Features:
     ✅ ECS Cluster with EC2 instances (no Fargate)
     ✅ CI/CD pipeline to provision infrastructure and deploy containers
     ✅ Terraform modules for infrastructure setup
@@ -18,7 +18,7 @@ This project provisions an AWS ECS cluster using Terraform and sets up a CI/CD p
 
 
 
-🏗️ Built With
+## 🏗️ Built With
   Terraform – Infrastructure as Code
   AWS ECS – Elastic Container Service
   AWS ECR – Elastic Container Registry
@@ -27,71 +27,74 @@ This project provisions an AWS ECS cluster using Terraform and sets up a CI/CD p
 
 
 
-🚦 Getting Started
-  Prerequisites
-  AWS account with proper permissions
-  Terraform installed (>= 1.0)
-  GitHub repository with GitHub Actions enabled
-    Installation
-    Clone the repo:
-        git clone https://github.com/your-username/your-repo.git
+## 🚦 Getting Started
+ ### Prerequisites
+  - AWS account with proper permissions
+  - Terraform installed (>= 1.0)
+  - GitHub repository with GitHub Actions enabled
+   - Installation
+    - Clone the repo:
+      Use  `git clone https://github.com/your-username/your-repo.git`
         
-  Configure AWS credentials and Terraform variables in variables.tf
-  Configure ECR repo name to match deploy.yml
-  Run CI/CD pipeline to provision infrastructure and deploy the container
+  - Configure AWS credentials and Terraform variables in variables.tf
+  - Configure ECR repo name to match deploy.yml
+  - Run CI/CD pipeline to provision infrastructure and deploy the container
 
 
 
-📦 Deployment Process
-  CI/CD pipeline triggers terraform init and terraform apply to provision ECS, ECR, and other resources
-  Docker container is built, tagged, and pushed to ECR
-  Task definition is updated automatically
-  Application becomes accessible via AWS-provided domain
+## 📦 Deployment Process
+  - CI/CD pipeline triggers terraform init and terraform apply to provision ECS, ECR, and other resources
+  - Docker container is built, tagged, and pushed to ECR
+  - Task definition is updated automatically
+  - Application becomes accessible via AWS-provided domain
 
 
 
-⚙️ Configuration
-  File	Description
-  variables.tf	Define AWS region, ECR repo name, and infrastructure settings
-  deploy.yml	CI/CD workflow configuration
-  main.tf	Terraform root module
-  .app/	Directory for application code
+## ⚙️ Configuration
+  ### variables.tf	
+  >Define AWS region, ECR repo name, and infrastructure settings
+ ### deploy.yml	
+ >CI/CD workflow configuration
+  ### main.tf	
+  >Terraform root module
+  ### .app/	
+  >Directory for application code
 
 
 
-🛡️ Security
+## 🛡️ Security
   AWS credentials are stored securely using GitHub secrets
   Security groups configured to restrict access
 
 
 
-💡 Troubleshooting
+## 💡 Troubleshooting
   If ECS task fails, check AWS console logs
   Ensure ECR repo name matches in variables.tf and deploy.yml
   Confirm AWS credentials are correctly configured
 
 
 
-🗺️ Roadmap
+## 🗺️ Roadmap
   Add support for multi-region deployment
   Automate secret rotation
   Add monitoring and logging
 
 
  
-🙌 Contributing
+## 🙌 Contributing
   Fork the repo
   Create a feature branch (git checkout -b feature/your-feature)
   Commit changes (git commit -m 'Add feature')
   Push to branch (git push origin feature/your-feature)
   Open a pull request
-
-
-
-📝 License
+## 📝 License
   Distributed under the MIT License. See LICENSE for details.
 
-📞 Contact
+## 📞 Contact
   Abdulrahman Said – www.linkedin.com/in/abdulrahman-said-4557a3236
+
+
+
 
 
