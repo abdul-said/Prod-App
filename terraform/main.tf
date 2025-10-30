@@ -83,7 +83,7 @@ module "ecr" {
 module "acm" {
   source = "./modules/acm"
   domain_name = ""
-  zone_id = module.aws_route53_zone_id
+  zone_id = module.route53.zone_id
 }
 
 module "elb" {
