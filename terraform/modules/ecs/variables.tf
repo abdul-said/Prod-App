@@ -15,3 +15,15 @@ variable "iam_role_name" {}
 variable "assume_role_policy" {}
 
 variable "iam_role_policy_arn" {}
+
+variable "lb_target_group" {
+  
+}
+
+variable "security_groups" {
+  
+}
+
+variable "subnet_ids" {
+  
+}

@@ -12,7 +12,7 @@ resource "aws_launch_template" "auto-scaling-group-app" {
 
   network_interfaces {
     subnet_id = var.subnet_id
-    security_groups = [var.security_groups]
+    security_groups = var.security_groups
   }
 }
 
