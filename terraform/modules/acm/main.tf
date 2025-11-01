@@ -1,5 +1,6 @@
 resource "aws_acm_certificate" "production" {
-  domain_name       = var.tm_domain_name
+  domain_name       = var.domain_name
+  subject_alternative_names = var.subdomain_name
   validation_method = var.acm_validation_mehod
 }
 

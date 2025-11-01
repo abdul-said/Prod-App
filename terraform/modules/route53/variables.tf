@@ -3,7 +3,7 @@ variable "domain_name" {
 }
 
 variable "domain_record_name" {
-  default = "tm.abdulrahman-application.com"
+  default = "tm"
 }
 
 variable "lb_dns_name" {
