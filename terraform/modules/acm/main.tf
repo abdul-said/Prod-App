@@ -1,13 +1,8 @@
 resource "aws_acm_certificate" "production" {
   domain_name       = var.domain_name
-  subject_alternative_names = var.subdomain_name
+  # subject_alternative_names = var.subdomain_name
   validation_method = var.acm_validation_mehod
 }
-
-# data "aws_route53_zone" "primary" {
-#   name         = var.domain_name
-#   private_zone = false
-# }
 
 resource "aws_route53_record" "validation_record" {
   for_each = {

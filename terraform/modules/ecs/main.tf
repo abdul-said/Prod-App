@@ -18,7 +18,7 @@ resource "aws_ecs_service" "app" {
 
   load_balancer {
     target_group_arn = var.lb_target_group
-    container_name   = "mongo" # same as container_definition use data_sources to fetch the name, or write it in the variable.
+    container_name   = "my-app" # same as container_definition use data_sources to fetch the name, or write it in the variable.
     container_port   = 80
   }
 

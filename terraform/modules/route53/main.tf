@@ -1,10 +1,10 @@
-resource "aws_route53_zone" "primary" {
+data "aws_route53_zone" "this" {
   name = var.domain_name
 }
 
 resource "aws_route53_record" "www" {
-  zone_id = aws_route53_zone.primary.zone_id
-  name    = var.domain_record_name
+  zone_id = data.aws_route53_zone.this.zone_id
+  name    = var.domain_name
   type    = var.alias_record_type
 
   alias {

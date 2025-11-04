@@ -14,6 +14,6 @@ variable "zone_id" {
   
 }
 
-variable "subdomain_name" {
-  default = ["tm.abdulrahman-application.com"]
-}
+# variable "subdomain_name" {
+#   default = ["tm.abdulrahman-application.com"]
+# }
