@@ -7,6 +7,10 @@
 ## 🚀 Project Overview
 This project provisions an AWS ECS cluster using Terraform and sets up a CI/CD pipeline to automate infrastructure and container deployment. The goal is to create a scalable containerized application environment using ECS without Fargate, ECR, ASG, VPC, and security groups.
 
+https://github.com/user-attachments/assets/cb739e45-61e6-4a63-b811-382a58936a04
+
+
+
 
 
   ### Key Features:
