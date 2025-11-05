@@ -100,7 +100,7 @@ variable "data_ami_filter_name" {
 }
 
 variable "data_ami_filter_value" {
-    default = ["amzn2-ami-ecs-hvm-*"]
+    default = ["al2023-ami-ecs-hvm-*-x86_64"]
 }
 
 variable "instance_profile_name" {
